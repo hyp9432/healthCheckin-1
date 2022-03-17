@@ -1,4 +1,6 @@
 import requests
+import uuid
+import random
 """
 第一次post请求：postA、postA_headers、resp_postA、、、、
 第二次get请求 ：getB、、、、
@@ -8,13 +10,16 @@ username = ""
 password = ""
 mycontent = ""
 # 获取idToken
+strings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+deviceId = ''.join(random.sample(strings, 24))
+clientId = uuid.uuid4().hex
 
 postA_headers = {'Content-Length': '0', 'Host': 'token.huanghuai.edu.cn', 'Connection': 'Keep-Alive',
                  'Accept-Encoding': 'gzip', 'User-Agent': 'okhttp/3.12.1'
                  }
 postA_datas = {'username': username, 'password': password, 'appId': 'com.lantu.MobileCampus.huanghuai', 'geo': '',
-               'deviceId': 'Yi90WtKZsAcDAAT1xuUPijdI', 'osType': 'android',
-               'clientId': 'c2a1e8ef01e8cbd6b559eab9cd946cad'
+               'deviceId': deviceId, 'osType': 'android',
+               'clientId': clientId
                }
 resp_postA = requests.post("https://token.huanghuai.edu.cn/password/passwordLogin", data=postA_datas,
                            headers=postA_headers)
@@ -83,9 +88,9 @@ message = resp_dictC['message']
 
 import smtplib
 from email.mime.text import MIMEText
-from_addr = "xxxxxxxxx" #发送方的邮箱
-from_pwd = "xxxxxxxx" #发送方的授权码
-to_addr = "xxxxxxxxx" #接收方的邮箱
+from_addr = "" #发送方的邮箱
+from_pwd = "" #发送方的授权码
+to_addr = "" #接收方的邮箱
 smtp_srv = "smtp.qq.com"
 if not (success):
     text="自动打卡失败，请手动打卡并检查问题！[" + message + "]"
